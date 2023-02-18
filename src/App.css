@@ -52,6 +52,13 @@
 .block:hover {
   box-shadow: gray 0px 2px 4px;
 }
+.block-container {
+  display: flex;
+  align-items: center;
+}
+.block-title {
+  margin-right: 4px;
+}
 .signal {
   display: flex;
   align-items: center;

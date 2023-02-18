@@ -1,15 +1,11 @@
 import React from "react";
+import { undergroundLevel, riverLevel } from "../data/data";
 
-export default function WaterLevel() {
-  const cors = "https://cors-anywhere.herokuapp.com/";
-  React.useEffect(() => {
-    fetch(`${cors}https://tinyurl.com/2yhzsjpv`)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-    fetch(`${cors}https://tinyurl.com/2yhzsjpv`)
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-  }, []);
-
-  return <div></div>;
+export default function WaterLevel({ data }) {
+  return (
+    <div>
+      {data.underground}
+      {data.river}
+    </div>
+  );
 }

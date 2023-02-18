@@ -1,9 +1,14 @@
 import React from "react";
 
-export default function Rain() {
-  const cors = "https://cors-anywhere.herokuapp.com/";
-
-  const [topRain, setTopRain] = React.useState([]);
+export default function Rain({ data }) {
+  const output = data.map((item) => (
+    <div key={item.stationName}>
+      <div>{warningCode(item.rain)}</div>
+      <p>
+        {item.stationName}：{item.rain}
+      </p>
+    </div>
+  ));
 
   function warningCode(value) {
     if (value > 100) {
@@ -17,27 +22,5 @@ export default function Rain() {
     }
   }
 
-  const output = topRain.map((item) => (
-    <div>
-      <div>{warningCode(item.rain)}</div>
-      <p>
-        {item.stationName}：{item.rain}
-      </p>
-    </div>
-  ));
-
-  React.useEffect(() => {
-    fetch(`${cors}https://tinyurl.com/j9t6jxds`)
-      .then((response) => response.json())
-      .then((data) => {
-        let array = data.data;
-        array.sort((a, b) => {
-          return b.rain - a.rain;
-        });
-        let arrayOutput = array.splice(0, 10);
-        setTopRain(arrayOutput);
-      });
-  }, []);
-
-  return <div>{topRain.length !== 0 && output}</div>;
+  return <div>{data.length !== 0 && output}</div>;
 }

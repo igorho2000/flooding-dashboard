@@ -1,9 +1,14 @@
 import React from "react";
+import Signal from "./Signal";
 
-export default function Block({ children, title }) {
+export default function Block({ children, title, status }) {
   return (
     <div className="block">
-      <h2 className="block-title">{title}</h2>
+      <div className="block-container">
+        <h2 className="block-title">{title}</h2>
+        <Signal color={status} />
+      </div>
+
       {children}
     </div>
   );
