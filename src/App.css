@@ -164,3 +164,33 @@
 .pump-legend-item:last-child div {
   background-color: rgb(117, 117, 179);
 }
+.summary {
+  display: flex;
+  align-items: center;
+}
+.summary-info {
+  display: flex;
+  margin: 0.5rem 0;
+  min-width: 80%;
+}
+.summary-info h3 {
+  margin-right: 0.5rem;
+}
+.summary-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 1rem;
+}
+.summary-score div {
+  border-radius: 50%;
+  border: black solid 4px;
+  font-size: 2rem;
+  width: 3.5rem;
+  height: 3.5rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin: 0.5rem 0;
+}
