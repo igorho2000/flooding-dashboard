@@ -206,7 +206,9 @@ function App() {
           <Block title="雨勢及降雨量" status={status.rain}>
             <Rain data={data.rain} status={status.rain} />
           </Block>
-          <Block title="資料來源">{/* <Source /> */}</Block>
+          <Block title="資料來源">
+            <Source />
+          </Block>
           <Block title="河川/下水道水位" status={status.waterLevel}>
             <WaterLevel
               data={data.waterLevel}

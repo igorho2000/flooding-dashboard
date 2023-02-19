@@ -85,7 +85,6 @@ export default function Summary({ status }) {
           </div>
         </div>
         <div className="summary-score">
-          <h4>不淹水可能性</h4>
           <div
             style={{
               color: totalColor(status),

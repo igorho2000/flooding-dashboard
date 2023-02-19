@@ -167,6 +167,7 @@
 .summary {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 .summary-info {
   display: flex;
@@ -182,6 +183,7 @@
   align-items: center;
   justify-content: center;
   margin-left: 1rem;
+  margin-right: 1.5rem;
 }
 .summary-score div {
   border-radius: 50%;
