@@ -2,10 +2,10 @@ import React from "react";
 
 export default function Rain({ data }) {
   const output = data.map((item) => (
-    <div key={item.stationName}>
-      <div>{warningCode(item.rain)}</div>
+    <div className="rain-item" key={item.stationName}>
+      <div style={{ backgroundColor: warningCode(item.rain) }}></div>
       <p>
-        {item.stationName}：{item.rain}
+        {item.stationName}：<strong>{item.rain}</strong> mm
       </p>
     </div>
   ));
@@ -22,5 +22,10 @@ export default function Rain({ data }) {
     }
   }
 
-  return <div>{data.length !== 0 && output}</div>;
+  return (
+    <div>
+      <h3 className="subtitle">台北降雨量前15大量測站</h3>
+      <div className="rain">{data.length !== 0 && output}</div>
+    </div>
+  );
 }

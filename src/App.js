@@ -61,7 +61,7 @@ function App() {
     array.sort((a, b) => {
       return b.rain - a.rain;
     });
-    const output = array.splice(0, 10);
+    const output = array.splice(0, 15);
     return output;
   }
 

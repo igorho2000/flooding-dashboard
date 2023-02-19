@@ -45,7 +45,7 @@
 .block {
   background-color: white;
   border-radius: 8px;
-  padding: 8px;
+  padding: 0.75rem 1rem;
   box-shadow: gray 0px 0px 4px;
   transition: box-shadow 0.2s;
 }
@@ -74,4 +74,93 @@
 .signal-text {
   margin-left: 4px;
   font-weight: 400;
+}
+
+.rain {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.rain-item {
+  display: flex;
+  align-items: center;
+}
+.rain-item div {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  margin-right: 4px;
+  box-shadow: lightgray 0px 2px 2px;
+}
+.subtitle {
+  font-weight: 400;
+  margin: 0.25rem 0;
+}
+.waterlevel-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.waterlevel-item {
+  width: 100%;
+  text-align: center;
+}
+.waterlevel-graph {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.waterlevel-graph div {
+  padding: 0.5rem 0;
+  background-color: gray;
+  width: 90%;
+  border-radius: 4px;
+  margin: 2px 0;
+  opacity: 0.4;
+  color: white;
+}
+.waterlevel-graph div:first-child {
+  background-color: crimson;
+}
+.waterlevel-graph div:nth-child(2) {
+  background-color: goldenrod;
+}
+.waterlevel-graph div:last-child {
+  background-color: green;
+}
+.waterlevel-item p {
+  margin-top: 0.5rem;
+}
+.pump {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 5rem;
+}
+.pump div {
+  background-color: lightblue;
+  height: 1.5rem;
+  border-radius: 4px;
+  box-shadow: gray 0px 2px 2px;
+}
+.pump div:last-child {
+  background-color: rgb(117, 117, 179);
+}
+.pump-legend {
+  display: flex;
+  justify-content: center;
+}
+.pump-legend-item {
+  display: flex;
+  align-items: center;
+  margin: 0 0.5rem;
+}
+.pump-legend-item div {
+  width: 1rem;
+  height: 1rem;
+  background-color: lightblue;
+  margin-right: 4px;
+  box-shadow: gray 0px 2px 1px;
+}
+.pump-legend-item:last-child div {
+  background-color: rgb(117, 117, 179);
 }
