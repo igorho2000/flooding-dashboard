@@ -24,7 +24,7 @@ export default function Rain({ data }) {
 
   return (
     <div>
-      <h3 className="subtitle">台北降雨量前15大量測站</h3>
+      <h3 className="subtitle">台北降雨量前10大量測站</h3>
       <div className="rain">{data.length !== 0 && output}</div>
     </div>
   );

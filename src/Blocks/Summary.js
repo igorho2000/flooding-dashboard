@@ -48,9 +48,9 @@ export default function Summary({ status }) {
 
   function totalColor(status) {
     if (
-      status.rain === null ||
-      status.waterLevel === null ||
-      status.pumps === null
+      status.rain === "gray" ||
+      status.waterLevel === "gray" ||
+      status.pumps === "gray"
     ) {
       return "gray";
     } else if (totalScore(status) > 90) {
@@ -59,7 +59,7 @@ export default function Summary({ status }) {
       return "gold";
     } else if (totalScore(status) > 65) {
       return "orange";
-    } else if (totalScore(status) > 50) {
+    } else {
       return "red";
     }
   }
@@ -84,17 +84,19 @@ export default function Summary({ status }) {
             <Signal color={status.pumps}>{pumpsMessage[status.pumps]}</Signal>
           </div>
         </div>
-        <div className="summary-score">
-          <div
-            style={{
-              color: totalColor(status),
-              borderColor: totalColor(status),
-            }}
-          >
-            <h4>{totalScore(status)}</h4>
+        {totalColor(status) !== "gray" && (
+          <div className="summary-score">
+            <div
+              style={{
+                color: totalColor(status),
+                borderColor: totalColor(status),
+              }}
+            >
+              <h4>{totalScore(status)}</h4>
+            </div>
+            <p>{colorMessage[totalColor(status)]}</p>
           </div>
-          <p>{colorMessage[totalColor(status)]}</p>
-        </div>
+        )}
       </div>
     </div>
   );

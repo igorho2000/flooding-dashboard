@@ -16,6 +16,8 @@
 }
 .header {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .header h1 {
   margin: 1rem;
@@ -78,11 +80,12 @@
 
 .rain {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 }
 .rain-item {
   display: flex;
   align-items: center;
+  margin-bottom: 4px;
 }
 .rain-item div {
   width: 1rem;
@@ -195,4 +198,56 @@
   align-items: center;
   display: flex;
   margin: 0.5rem 0;
+}
+.loading {
+  width: 100%;
+  min-height: 20vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loading-spinner {
+  width: 1rem;
+  height: 1rem;
+  border-style: solid;
+  border-width: 0.5rem;
+  border-color: rgb(78, 205, 205);
+  border-left-color: rgb(61, 110, 154);
+  border-right-color: rgb(61, 110, 154);
+  border-radius: 50%;
+  animation: loading 2s infinite linear;
+}
+@keyframes loading {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+
+.update {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-right: 1rem;
+}
+.update-button {
+  font-size: 1.2rem;
+  padding: 4px 1rem;
+  border-radius: 2rem;
+  background-color: rgb(61, 110, 154);
+  color: white;
+  border: none;
+  box-shadow: 0px 4px rgb(120, 183, 183);
+  margin-bottom: 0.5rem;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+.update-button:hover {
+  cursor: pointer;
+  background-color: rgb(38, 70, 98);
+  box-shadow: 0px 4px rgb(61, 110, 154);
+}
+.update p {
+  font-size: 0.8rem;
 }

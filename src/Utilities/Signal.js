@@ -6,6 +6,7 @@ export default function Signal({ color, children }) {
     orange: "注意",
     gold: "微異狀",
     green: "正常",
+    gray: "待查",
   };
 
   return (

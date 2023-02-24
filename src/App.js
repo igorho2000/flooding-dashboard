@@ -8,6 +8,8 @@ import Source from "./Blocks/Source";
 import Summary from "./Blocks/Summary";
 
 import { riverLevel, undergroundLevel, pumpsData, rain } from "./data/data";
+import axios from "axios";
+import Loading from "./Utilities/Loading";
 
 function App() {
   const [summary, setSummary] = useState({
@@ -15,21 +17,128 @@ function App() {
     text: ["？", "？", "？"],
   });
   const [status, setStatus] = useState({
-    rain: rainWarningCode(cleanRainData(rain)),
-    waterLevel: waterLevelWarningCode(
-      cleanWaterLevelData(undergroundLevel),
-      cleanWaterLevelData(riverLevel)
-    ),
-    pumps: null,
+    rain: "gray",
+    waterLevel: "gray",
+    pumps: "gray",
   });
   const [data, setData] = useState({
-    rain: cleanRainData(rain),
-    waterLevel: {
-      underground: cleanWaterLevelData(undergroundLevel),
-      river: cleanWaterLevelData(riverLevel),
-    },
-    pumps: cleanPumpsData(pumpsData),
+    rain: null,
+    river: null,
+    underground: null,
+    pumps: null,
   });
+  const [update, setUpdate] = useState({
+    time: "",
+    isUpdating: true,
+  });
+
+  React.useEffect(() => {
+    axios
+      .get("https://tinyurl.com/j9t6jxds")
+      .then((res) => {
+        const cleaned = cleanRainData(res.data);
+        setData((state) => ({
+          ...state,
+          rain: cleaned,
+        }));
+      })
+      .catch((err) =>
+        setData((state) => ({
+          ...state,
+          rain: null,
+        }))
+      );
+    axios
+      .get("https://tinyurl.com/yvtzcthz")
+      .then((res) => {
+        const cleaned = cleanWaterLevelData(res.data);
+        setData((state) => ({
+          ...state,
+          river: cleaned,
+        }));
+      })
+      .catch((err) =>
+        setData((state) => ({
+          ...state,
+          river: null,
+        }))
+      );
+    axios
+      .get("https://ppt.cc/f7TqBx")
+      .then((res) => {
+        const cleaned = cleanWaterLevelData(res.data);
+        setData((state) => ({
+          ...state,
+          underground: cleaned,
+        }));
+      })
+      .catch((err) =>
+        setData((state) => ({
+          ...state,
+          underground: null,
+        }))
+      );
+    axios
+      .get("https://tinyurl.com/2yhzsjpv")
+      .then((res) => {
+        const cleaned = cleanPumpsData(res.data);
+        setData((state) => ({
+          ...state,
+          pumps: cleaned,
+        }));
+      })
+      .catch((err) =>
+        setData((state) => ({
+          ...state,
+          pumps: null,
+        }))
+      );
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+
+    setUpdate((state) => ({
+      time:
+        "最近更新時間：" +
+        year +
+        "年" +
+        month +
+        "月" +
+        day +
+        "日" +
+        hours +
+        "時" +
+        minutes +
+        "分" +
+        seconds +
+        "秒",
+      isUpdating: false,
+    }));
+  }, [update.isUpdating]);
+
+  React.useEffect(() => {
+    setStatus((state) => ({
+      ...state,
+      rain: data.rain !== null ? rainWarningCode(data.rain) : "gray",
+      waterLevel:
+        data.river !== null || data.underground !== null
+          ? waterLevelWarningCode(data.underground, data.river)
+          : "gray",
+    }));
+  }, [data]);
+
+  function cleanRainData(object) {
+    let array = object.data;
+    array.sort((a, b) => {
+      return b.rain - a.rain;
+    });
+    const output = array.splice(0, 10);
+    return output;
+  }
 
   function rainWarningCode(value) {
     if (value > 100) {
@@ -43,41 +152,8 @@ function App() {
     }
   }
 
-  React.useEffect(() => {
-    // fetch(`${cors}https://tinyurl.com/j9t6jxds`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     let array = data.data;
-    //     array.sort((a, b) => {
-    //       return b.rain - a.rain;
-    //     });
-    //     let arrayOutput = array.splice(0, 10);
-    //     setTopRain(arrayOutput);
-    //   });
-  }, []);
-
-  function cleanRainData(object) {
-    let array = object.data;
-    array.sort((a, b) => {
-      return b.rain - a.rain;
-    });
-    const output = array.splice(0, 15);
-    return output;
-  }
-
   const undergroundBase = 9.524;
   const riverBase = 6.785;
-
-  React.useEffect(() => {
-    // // river
-    // fetch(`${cors}https://tinyurl.com/yvtzcthz`)
-    //   .then((response) => response.json())
-    //   .then((data) => console.log(data));
-    // // underground
-    // fetch(`${cors}https://ppt.cc/f7TqBx`)
-    //   .then((response) => response.json())
-    //   .then((data) => console.log(data));
-  }, []);
 
   function cleanWaterLevelData(object) {
     const arr = object.data;
@@ -91,6 +167,11 @@ function App() {
   function waterLevelWarningCode(underground, river) {
     const undergroundBase = 9.524;
     const riverBase = 6.785;
+
+    if (underground === null || river === null) {
+      return "gray";
+    }
+
     if (underground > undergroundBase + 5 && river > riverBase + 5) {
       return "red";
     } else if (underground > undergroundBase + 5 || river > riverBase + 5) {
@@ -101,27 +182,6 @@ function App() {
       return "green";
     }
   }
-
-  // React.useEffect(() => {
-  //   fetch(`${cors}https://tinyurl.com/2yhzsjpv`)
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       var open = 0;
-  //       var close = 0;
-  //       const pumps = data.count;
-  //       for (let i = 0; i < data.data.length; i++) {
-  //         if (data.data[i].allPumbLights === "-") {
-  //           close += 1;
-  //         } else {
-  //           open += 1;
-  //         }
-  //       }
-  //       setPumps([
-  //         Math.floor((close / pumps) * 100),
-  //         Math.floor((open / pumps) * 100),
-  //       ]);
-  //     });
-  // }, []);
 
   function cleanPumpsData(object) {
     const pumpNo = object.count;
@@ -136,6 +196,11 @@ function App() {
   }
 
   React.useEffect(() => {
+    if (status.waterLevel === "gray" || data.pumps === null) {
+      setStatus((state) => ({ ...state, pumps: "gray" }));
+      return;
+    }
+
     if (
       (status.waterLevel === "green" && data.pumps < 90) ||
       (status.waterLevel === "red" && data.pumps > 10)
@@ -169,9 +234,9 @@ function App() {
   }
   React.useEffect(() => {
     if (
-      status.rain === null ||
-      status.waterLevel === null ||
-      status.pumps === null
+      status.rain === "gray" ||
+      status.waterLevel === "gray" ||
+      status.pumps === "gray"
     ) {
       setSummary({ color: "gray", text: ["？", "？", "？"] });
     } else if (totalScore(status) > 90) {
@@ -188,15 +253,38 @@ function App() {
   return (
     <div className="App">
       <header className="header">
-        <h1>
-          台北市
-          {summary.text.map((item, index) => (
-            <div style={{ color: summary.color }} key={`titleKeyword${index}`}>
-              {item}
-            </div>
-          ))}
-          淹
-        </h1>
+        <div>
+          <h1>
+            台北市
+            {summary.text.map((item, index) => (
+              <div
+                style={{ color: summary.color }}
+                key={`titleKeyword${index}`}
+              >
+                {item}
+              </div>
+            ))}
+            淹
+          </h1>
+        </div>
+        <div className="update">
+          <button
+            className="update-button"
+            onClick={() =>
+              setUpdate((state) => ({
+                ...state,
+                isUpdating: state.isUpdating ? false : true,
+              }))
+            }
+            style={{
+              opacity: update.isUpdating && 0.3,
+              pointerEvents: update.isUpdating && "none",
+            }}
+          >
+            {update.isUpdating ? "更新中" : "再次更新"}
+          </button>
+          <p>{update.time}</p>
+        </div>
       </header>
       <div className="body">
         <div className="blocks">
@@ -204,20 +292,28 @@ function App() {
             <Summary status={status} />
           </Block>
           <Block title="雨勢及降雨量" status={status.rain}>
-            <Rain data={data.rain} status={status.rain} />
+            {data.rain === null ? (
+              <Loading />
+            ) : (
+              <Rain data={data.rain} status={status.rain} />
+            )}
           </Block>
           <Block title="資料來源">
             <Source />
           </Block>
           <Block title="河川/下水道水位" status={status.waterLevel}>
-            <WaterLevel
-              data={data.waterLevel}
-              undergroundBase={undergroundBase}
-              riverBase={riverBase}
-            />
+            {data.river === null || data.underground === null ? (
+              <Loading />
+            ) : (
+              <WaterLevel
+                data={{ river: data.river, underground: data.underground }}
+                undergroundBase={undergroundBase}
+                riverBase={riverBase}
+              />
+            )}
           </Block>
           <Block title="抽水站啟動狀態" status={status.pumps}>
-            <Pump data={data.pumps} />
+            {data.pumps === null ? <Loading /> : <Pump data={data.pumps} />}
           </Block>
         </div>
       </div>
