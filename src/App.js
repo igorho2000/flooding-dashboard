@@ -254,18 +254,22 @@ function App() {
     <div className="App">
       <header className="header">
         <div>
-          <h1>
-            台北市
-            {summary.text.map((item, index) => (
-              <div
-                style={{ color: summary.color }}
-                key={`titleKeyword${index}`}
-              >
-                {item}
-              </div>
-            ))}
-            淹
-          </h1>
+          <div className="maintitle">
+            <h1>台北市</h1>
+            <div className="maintitle-sub">
+              {summary.text.map((item, index) => (
+                <div
+                  style={{ color: summary.color }}
+                  key={`titleKeyword${index}`}
+                  className="maintitle-square"
+                >
+                  {item}
+                </div>
+              ))}
+
+              <h1>淹</h1>
+            </div>
+          </div>
         </div>
         <div className="update">
           <button
@@ -298,7 +302,7 @@ function App() {
               <Rain data={data.rain} status={status.rain} />
             )}
           </Block>
-          <Block title="資料來源">
+          <Block title="資料來源" className="source">
             <Source />
           </Block>
           <Block title="河川/下水道水位" status={status.waterLevel}>

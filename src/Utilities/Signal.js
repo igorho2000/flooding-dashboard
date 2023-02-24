@@ -4,7 +4,7 @@ export default function Signal({ color, children }) {
   const code = {
     red: "警戒",
     orange: "注意",
-    gold: "微異狀",
+    gold: "異狀",
     green: "正常",
     gray: "待查",
   };

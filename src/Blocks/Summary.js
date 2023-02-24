@@ -36,7 +36,7 @@ export default function Summary({ status }) {
     red: "河川或下水道都達到紅色警戒",
   };
   const pumpsMessage = {
-    green: "水位正常不運轉/水位高漲運轉中",
+    green: "水位正常不運轉/高漲運轉中",
     gold: "多組機械失常",
   };
   const colorMessage = {
@@ -86,6 +86,9 @@ export default function Summary({ status }) {
         </div>
         {totalColor(status) !== "gray" && (
           <div className="summary-score">
+            <p>
+              <strong>不淹水信心%</strong>
+            </p>
             <div
               style={{
                 color: totalColor(status),

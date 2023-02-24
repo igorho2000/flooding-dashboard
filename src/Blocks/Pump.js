@@ -4,7 +4,7 @@ import { pumpsData } from "../data/data";
 export default function Pump({ data }) {
   return (
     <div>
-      <h3 className="subtitle">水位正常時抽水站不應啟用，反之應啟用排水</h3>
+      <h3 className="subtitle">水位正常抽水站不啟用，反之啟用排水</h3>
       <div className="pump">
         <div style={{ width: `${data * 0.9}%` }}></div>
         <div style={{ width: `${(100 - data) * 0.9}%` }}></div>
